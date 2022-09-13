@@ -90,7 +90,7 @@ You may check the package's configuration file at:
 
 ## Translations source
 
-This package allows you to load translation from the regular Laravel localization files (in /resources/lang), from the database, from cache or in a mix of the previous for development. You may configure the desired mode of operation through the translator.php config file and/or the TRANSLATION_SOURCE environment variable. Accepted values are:
+This package allows you to load translation from the regular Laravel localization files (in /lang), from the database, from cache or in a mix of the previous for development. You may configure the desired mode of operation through the translator.php config file and/or the TRANSLATION_SOURCE environment variable. Accepted values are:
 
  - 'files'		To load translations from Laravel's language files (default)
  - 'database'	To load translations from the database
@@ -242,7 +242,7 @@ You may also choose to invalidate only a given locale, namespace and group combi
 - The namespace is either '*' for your application translation files, or 'package' for vendor translation files.
 - The group variable is the path to the translation file you wish to clear.
 
-For example, say we have the following file in our resources/lang directory: en/auth.php, en/auth/login.php and en/vendor/waavi/login.php. To clear the cache entries for each of them you would call:
+For example, say we have the following file in our lang directory: en/auth.php, en/auth/login.php and en/vendor/waavi/login.php. To clear the cache entries for each of them you would call:
 ```php
     \TranslationCache::flush('en', 'auth', '*');
     \TranslationCache::flush('en', 'auth/login', '*');

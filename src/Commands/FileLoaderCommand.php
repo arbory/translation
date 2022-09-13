@@ -57,7 +57,7 @@ class FileLoaderCommand extends Command
      *  Loads all locale directories in the given path (/en, /es, /fr) as long as the locale corresponds to a language in the database.
      *  If a vendor directory is found not inside another vendor directory, the files within it will be loaded with the corresponding namespace.
      *
-     *  @param  string  $path           Full path to the root directory of the locale directories. Usually /path/to/laravel/resources/lang
+     *  @param  string  $path           Full path to the root directory of the locale directories. Usually /path/to/laravel/lang
      *  @param  string  $namespace      Namespace where the language files should be inserted.
      *  @return void
      */
@@ -79,7 +79,7 @@ class FileLoaderCommand extends Command
     /**
      *  Load all vendor overriden localization packages. Calls loadLocaleDirectories with the appropriate namespace.
      *
-     *  @param  string  $path   Path to vendor locale root, usually /path/to/laravel/resources/lang/vendor.
+     *  @param  string  $path   Path to vendor locale root, usually /path/to/laravel/lang/vendor.
      *  @see    http://laravel.com/docs/5.1/localization#overriding-vendor-language-files
      *  @return void
      */
@@ -95,7 +95,7 @@ class FileLoaderCommand extends Command
     /**
      *  Load all files inside a locale directory and its subdirectories.
      *
-     *  @param  string  $path       Path to locale root. Ex: /path/to/laravel/resources/lang/en
+     *  @param  string  $path       Path to locale root. Ex: /path/to/laravel/lang/en
      *  @param  string  $locale     Locale to apply when loading the localization files.
      *  @param  string  $namespace  Namespace to apply when loading the localization files ('*' by default, or the vendor package name if not)
      *  @param  string  $group      When loading from a subdirectory, the subdirectory's name must be prepended. For example: trans('subdir/file.entry').
@@ -121,7 +121,7 @@ class FileLoaderCommand extends Command
     /**
      *  Loads the given file into the database
      *
-     *  @param  string  $path           Full path to the localization file. For example: /path/to/laravel/resources/lang/en/auth.php
+     *  @param  string  $path           Full path to the localization file. For example: /path/to/laravel/lang/en/auth.php
      *  @param  string  $locale
      *  @param  string  $namespace
      *  @param  string  $group          Relative from the locale directory's root. For example subdirectory/subdir2/
