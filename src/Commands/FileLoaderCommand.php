@@ -64,6 +64,7 @@ class FileLoaderCommand extends Command
     public function loadLocaleDirectories($path, $namespace = '*')
     {
         $availableLocales = $this->languageRepository->availableLocales();
+        $this->languageRepository->ensureLocales($availableLocales);
         $directories      = $this->files->directories($path);
         foreach ($directories as $directory) {
             $locale = basename($directory);

@@ -142,6 +142,19 @@ class LanguageRepository extends Repository
         return $this->defaultAvailableLocales;
     }
 
+    // create locales if missing
+    public function ensureLocales(array $locales): void
+    {
+        foreach($locales as $locale) {
+            if(!Language::where(['locale' => $locale])->exists()) {
+                Language::create([
+                    'locale' => $locale,
+                    'name' => $locale,
+                ]);
+            }
+        }
+    }
+
     /**
      *  Checks if a language with the given locale exists.
      *
