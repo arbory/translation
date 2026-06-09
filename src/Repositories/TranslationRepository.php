@@ -35,6 +35,20 @@ class TranslationRepository extends Repository
     protected $errors;
 
     /**
+     *  Application instance.
+     *
+     *  @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
+     *  Default locale.
+     *
+     *  @var string
+     */
+    protected $defaultLocale;
+
+    /**
      *  Constructor
      *  @param  \Waavi\Translation\Models\Translation   $model  Bade model for queries.
      *  @param  \Illuminate\Validation\Validator        $validator  Validator factory
