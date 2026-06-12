@@ -58,13 +58,13 @@ class CacheLoader extends Loader
      */
     public function loadSource($locale, $group, $namespace = '*')
     {
-        if ($this->cache->has($locale, $group, $namespace)) {
-            return $this->cache->get($locale, $group, $namespace);
-        } else {
-            $source = $this->fallback->load($locale, $group, $namespace);
-            $this->cache->put($locale, $group, $namespace, $source, $this->cacheTimeout);
-            return $source;
+        $cached = $this->cache->get($locale, $group, $namespace);
+        if (!is_null($cached)) {
+            return $cached;
         }
+        $source = $this->fallback->load($locale, $group, $namespace);
+        $this->cache->put($locale, $group, $namespace, $source, $this->cacheTimeout);
+        return $source;
     }
 
     /**

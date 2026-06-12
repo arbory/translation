@@ -70,7 +70,8 @@ class TaggedRepository implements CacheRepositoryInterface
     public function put($locale, $group, $namespace, $content, $minutes)
     {
         $key = $this->getKey($locale, $group, $namespace);
-        $this->store->tags([$this->cacheTag, $key])->put($key, $content, $minutes);
+        // TaggedCache::put() takes the timeout in seconds.
+        $this->store->tags([$this->cacheTag, $key])->put($key, $content, $minutes * 60);
     }
 
     /**

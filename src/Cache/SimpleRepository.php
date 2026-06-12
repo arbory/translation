@@ -12,6 +12,13 @@ class SimpleRepository implements CacheRepositoryInterface
     protected $store;
 
     /**
+     * The translation cache tag
+     *
+     * @var string
+     */
+    protected $cacheTag;
+
+    /**
      * Create a new cache repository instance.
      *
      * @param  \Illuminate\Contracts\Cache\Store  $store
@@ -63,7 +70,8 @@ class SimpleRepository implements CacheRepositoryInterface
     public function put($locale, $group, $namespace, $content, $minutes)
     {
         $key = $this->getKey($locale, $group, $namespace);
-        $this->store->put($key, $content, $minutes);
+        // Store::put() takes the timeout in seconds.
+        $this->store->put($key, $content, $minutes * 60);
     }
 
     /**
@@ -76,20 +84,19 @@ class SimpleRepository implements CacheRepositoryInterface
      */
     public function flush($locale, $group, $namespace)
     {
-        $this->flushAll();
+        $this->store->forget($this->getKey($locale, $group, $namespace));
     }
 
     /**
-     *  Completely flush the cache
+     *  Flush all translation entries without clearing the rest of the cache store.
+     *  Bumping the version invalidates every translation key at once; orphaned
+     *  entries expire through their regular cache timeout.
      *
-     *  @param  string  $locale
-     *  @param  string  $group
-     *  @param  string  $namespace
      *  @return void
      */
     public function flushAll()
     {
-        $this->store->flush();
+        $this->store->forever($this->getVersionKey(), max(time(), $this->getVersion() + 1));
     }
 
     /**
@@ -102,7 +109,27 @@ class SimpleRepository implements CacheRepositoryInterface
      */
     protected function getKey($locale, $group, $namespace)
     {
-        return md5("{$this->cacheTag}-{$locale}-{$group}-{$namespace}");
+        return md5("{$this->cacheTag}-{$this->getVersion()}-{$locale}-{$group}-{$namespace}");
+    }
+
+    /**
+     *  Returns the current translation cache version.
+     *
+     *  @return integer
+     */
+    protected function getVersion()
+    {
+        return $this->store->get($this->getVersionKey()) ?: 1;
+    }
+
+    /**
+     *  Returns the cache key holding the translation cache version.
+     *
+     *  @return string
+     */
+    protected function getVersionKey()
+    {
+        return md5("{$this->cacheTag}-version");
     }
 
 }

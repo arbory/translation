@@ -28,10 +28,22 @@ class RepositoryFactoryTest extends TestCase
     /**
      * @test
      */
-    public function test_returns_simple_cache_if_taggable_store()
+    public function test_returns_tagged_cache_if_taggable_store()
     {
         $store = new ArrayStore;
         $repo  = RepositoryFactory::make($store, 'translation');
+        $this->assertEquals(TaggedRepository::class, get_class($repo));
+    }
+
+    /**
+     * @test
+     */
+    public function test_returns_tagged_cache_if_taggable_store_subclass()
+    {
+        $store = new class extends ArrayStore
+        {
+        };
+        $repo = RepositoryFactory::make($store, 'translation');
         $this->assertEquals(TaggedRepository::class, get_class($repo));
     }
 }
