@@ -215,7 +215,7 @@ Available since version 2.1.3.8, if the cache store in use allows for tags, the 
 
 ### Clearing the cache
 
-Available since version 2.1.3.8, you may clear the translation cache through both an Artisan Command and a Facade. If cache tags are in use, only the translation cache will be cleared. All of your application cache will however be cleared if you cache tags are not available.
+Available since version 2.1.3.8, you may clear the translation cache through both an Artisan Command and a Facade. Only the translation cache is cleared, whether or not the cache store supports tags. On stores without tag support, clearing works by bumping an internal cache version, so stale translation entries are no longer readable and expire through their regular cache timeout.
 
 Cache flush command:
 

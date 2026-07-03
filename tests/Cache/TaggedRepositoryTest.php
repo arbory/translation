@@ -1,8 +1,10 @@
 <?php namespace Waavi\Translation\Test\Cache;
 
 use Illuminate\Cache\ArrayStore;
+use Illuminate\Cache\TaggableStore;
 use Waavi\Translation\Cache\TaggedRepository;
 use Waavi\Translation\Test\TestCase;
+use \Mockery;
 
 class TaggedRepositoryTest extends TestCase
 {
@@ -11,6 +13,15 @@ class TaggedRepositoryTest extends TestCase
         // During the parent's setup, both a 'es' 'Spanish' and 'en' 'English' languages are inserted into the database.
         parent::setUp();
         $this->repo = new TaggedRepository(new ArrayStore, 'translation');
+    }
+
+    public function tearDown(): void
+    {
+        if ($container = Mockery::getContainer()) {
+            $this->addToAssertionCount($container->mockery_getExpectationCount());
+        }
+        Mockery::close();
+        parent::tearDown();
     }
 
     /**
@@ -69,5 +80,18 @@ class TaggedRepositoryTest extends TestCase
         $this->repo->flushAll();
         $this->assertNull($this->repo->get('en', 'namespace', 'group'));
         $this->assertNull($this->repo->get('es', 'namespace', 'group'));
+    }
+
+    /**
+     * @test
+     */
+    public function test_put_passes_the_timeout_to_the_store_in_seconds()
+    {
+        $taggedCache = Mockery::mock();
+        $taggedCache->shouldReceive('put')->with(Mockery::type('string'), 'value', 3600)->once();
+        $store = Mockery::mock(TaggableStore::class);
+        $store->shouldReceive('tags')->andReturn($taggedCache);
+        $repo = new TaggedRepository($store, 'translation');
+        $repo->put('en', 'namespace', 'group', 'value', 60);
     }
 }
