@@ -20,6 +20,20 @@ class CacheFlushCommand extends Command
     protected $description = "Flush the translation cache.";
 
     /**
+     * The cache repository.
+     *
+     * @var \Waavi\Translation\Cache\CacheRepositoryInterface
+     */
+    protected $cacheRepository;
+
+    /**
+     * Whether the translation cache is enabled.
+     *
+     * @var bool
+     */
+    protected $cacheEnabled;
+
+    /**
      *  Create the cache flushed command
      *
      *  @param  \Waavi\Lang\Providers\LanguageProvider        $languageRepository

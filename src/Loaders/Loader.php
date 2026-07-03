@@ -15,6 +15,13 @@ abstract class Loader implements LoaderContract
     protected $defaultLocale;
 
     /**
+     * All of the registered namespace hints.
+     *
+     * @var array
+     */
+    protected $hints = [];
+
+    /**
      *  Create a new loader instance.
      *
      *  @param  \Waavi\Translation\Repositories\LanguageRepository      $languageRepository

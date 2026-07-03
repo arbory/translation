@@ -12,6 +12,13 @@ class SimpleRepository implements CacheRepositoryInterface
     protected $store;
 
     /**
+     * The cache tag.
+     *
+     * @var string
+     */
+    protected $cacheTag;
+
+    /**
      * Create a new cache repository instance.
      *
      * @param  \Illuminate\Contracts\Cache\Store  $store

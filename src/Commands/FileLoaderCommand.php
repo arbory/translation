@@ -22,6 +22,41 @@ class FileLoaderCommand extends Command
     protected $description = "Load language files into the database.";
 
     /**
+     * The language repository.
+     *
+     * @var \Waavi\Translation\Repositories\LanguageRepository
+     */
+    protected $languageRepository;
+
+    /**
+     * The translation repository.
+     *
+     * @var \Waavi\Translation\Repositories\TranslationRepository
+     */
+    protected $translationRepository;
+
+    /**
+     * The translations path.
+     *
+     * @var string
+     */
+    protected $path;
+
+    /**
+     * The filesystem instance.
+     *
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $files;
+
+    /**
+     * The default locale.
+     *
+     * @var string
+     */
+    protected $defaultLocale;
+
+    /**
      *  Create a new mixed loader instance.
      *
      *  @param  \Waavi\Lang\Providers\LanguageProvider        $languageRepository
