@@ -11,6 +11,41 @@ use Waavi\Translation\UriLocalizer;
 class TranslationMiddleware
 {
     /**
+     *  Uri localizer.
+     *
+     *  @var \Waavi\Translation\UriLocalizer
+     */
+    protected $uriLocalizer;
+
+    /**
+     *  Language repository.
+     *
+     *  @var \Waavi\Translation\Repositories\LanguageRepository
+     */
+    protected $languageRepository;
+
+    /**
+     *  Laravel config.
+     *
+     *  @var \Illuminate\Config\Repository
+     */
+    protected $config;
+
+    /**
+     *  View factory.
+     *
+     *  @var \Illuminate\View\Factory
+     */
+    protected $viewFactory;
+
+    /**
+     *  Application instance.
+     *
+     *  @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
      *  Constructor
      *
      *  @param  Waavi\Translation\UriLocalizer                      $uriLocalizer
